@@ -1,13 +1,3 @@
-# <<<<<<< HEAD
-
-<<<<<<< HEAD
-
-# STMIK-Project
-
-=======
-
-> > > > > > > 7d4e6c0 (README)
-
 ## Chart Dashboard - Visualisasi Data
 
 Project ini adalah studi kasus visualisasi data pasien berbasis kategori menggunakan Node.js, Express, EJS, MySQL, dan D3.js. Data dari tabel `categories` dan `patients` diambil melalui REST API (Fetch API) lalu divisualisasikan menjadi 6 jenis chart berbeda di halaman dashboard.
