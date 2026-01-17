@@ -84,8 +84,7 @@ Tabel yang digunakan:
 
 - Pastikan database `dashboard_data` sudah tersedia.
 - Pastikan tabel `categories` dan `patients` sesuai dengan struktur di atas.
-- Chart akan otomatis update setelah data diubah melalui form input di dashboard.
-  <<<<<<< HEAD
-  =======
-  > > > > > > > 118c8ac (README)
-  > > > > > > > 7d4e6c0 (README)
+- Chart akan otomatis update setelah data diubah atau ditambah melalui form input di dashboard.
+
+#ℹ️link tugas UTS🙏
+https://youtu.be/eTPShWEdVac
