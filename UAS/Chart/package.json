@@ -1,0 +1,38 @@
+{
+  "profile": {
+    "name": "Pandu Eka Wardana",
+    "nim": "SI20230029",
+    "jurusan": "Sistem Informasi",
+    "semseter": "5",
+    "info": "UAS Visualisasi Data dengan 6 chart"
+  },
+  "name": "chart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch",
+    "nodemon": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "chart.js": "^4.5.1",
+    "cors": "^2.8.5",
+    "d3": "^7.9.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "method-override": "^3.0.0",
+    "mysql2": "^3.16.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

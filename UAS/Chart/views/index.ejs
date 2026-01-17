@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Visualisasi Data</title>
+</head>
+<body class="min-h-screen bg-white text-slate-900">
+    <div class="mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-10 sm:px-6 lg:px-8" style="font-family: 'Space Grotesk', sans-serif;">
+        <header class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-rose-500">Dashboard</p>
+                <h1 class="mt-2 text-3xl font-semibold sm:text-4xl">Data Management</h1>
+                <p class="mt-2 max-w-xl text-sm text-slate-600">Data diambil dari Express API menggunakan fetch dan ditampilkan lewat EJS.</p>
+            </div>
+            <div class="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs font-medium text-slate-600 shadow-sm">
+                Base URL: <span class="font-semibold text-slate-800">/api</span>
+            </div>
+        </header>
+
+        <main class="mt-10 grid gap-6 lg:grid-cols-2">
+            <section class="rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-sm backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Categories</h2>
+                    <span class="text-xs font-medium text-slate-500">Table: categories</span>
+                </div>
+                <form id="category-form" class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <input id="category-name" type="text" placeholder="Category name" required
+                           class="w-full flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-200">
+                    <button type="submit"
+                            class="inline-flex items-center justify-center rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-600">
+                        Add
+                    </button>
+                </form>
+                <ul id="category-list" class="mt-4 divide-y divide-slate-200/80 text-sm"></ul>
+            </section>
+
+            <section class="rounded-2xl border border-slate-200/70 bg-white/80 p-6 shadow-sm backdrop-blur">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">Patients</h2>
+                    <span class="text-xs font-medium text-slate-500">Table: patients</span>
+                </div>
+                <form id="patient-form" class="mt-4 grid gap-3 sm:grid-cols-2">
+                    <input id="patient-name" type="text" placeholder="Patient name" required
+                           class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                    <select id="patient-category" required
+                            class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                        <option value="" disabled selected>Pilih kategori</option>
+                    </select>
+                    <input id="patient-age" type="number" min="0" placeholder="Age" required
+                           class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                    <input id="patient-city" type="text" placeholder="City" required
+                           class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                    <input id="patient-info" type="text" placeholder="Info (optional)"
+                           class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:col-span-2">
+                    <button type="submit"
+                            class="inline-flex items-center justify-center rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-600 sm:col-span-2">
+                        Add
+                    </button>
+                </form>
+                <ul id="patient-list" class="mt-4 divide-y divide-slate-200/80 text-sm"></ul>
+            </section>
+        </main>
+
+        <section class="mt-12">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-500">Charts</p>
+                    <h2 class="mt-2 text-2xl font-semibold">Visualisasi Data</h2>
+                    <p class="mt-1 text-sm text-slate-600">Enam chart berbeda dari data kategori, umur, dan kota pasien.</p>
+                </div>
+                <div class="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs font-medium text-slate-600 shadow-sm">
+                    D3.js <span class="font-semibold text-slate-800">6 Types</span>
+                </div>
+            </div>
+
+            <div class="mt-6 grid gap-6 lg:grid-cols-2">
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Patients per Category</span>
+                        <span>Bar</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-category-bar" class="h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Average Age per Category</span>
+                        <span>Line</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-age-line" class="h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Patient Share per Category</span>
+                        <span>Pie</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-category-pie" class="h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Unique Cities per Category</span>
+                        <span>Doughnut</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-city-doughnut" class="h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Top City Count per Category</span>
+                        <span>Polar Area</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-city-polar" class="h-full w-full"></div>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                    <div class="flex items-center justify-between text-xs font-semibold text-slate-500">
+                        <span>Age Range per Category</span>
+                        <span>Radar</span>
+                    </div>
+                    <div class="mt-4 h-64">
+                        <div id="chart-age-radar" class="h-full w-full"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="category-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 px-4 py-6">
+        <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold">Edit Category</h3>
+                <button type="button" id="category-edit-close" class="text-sm font-semibold text-slate-500 hover:text-slate-700">Close</button>
+            </div>
+            <form id="category-edit-form" class="mt-4 flex flex-col gap-3">
+                <input id="category-edit-id" type="hidden">
+                <input id="category-edit-name" type="text" placeholder="Category name" required
+                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-200">
+                <div class="mt-2 flex items-center justify-end gap-2">
+                    <button type="button" id="category-edit-cancel"
+                            class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:border-slate-300 hover:text-slate-800">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="rounded-lg bg-rose-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-rose-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="patient-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 px-4 py-6">
+        <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold">Edit Patient</h3>
+                <button type="button" id="patient-edit-close" class="text-sm font-semibold text-slate-500 hover:text-slate-700">Close</button>
+            </div>
+            <form id="patient-edit-form" class="mt-4 grid gap-3 sm:grid-cols-2">
+                <input id="patient-edit-id" type="hidden">
+                <input id="patient-edit-name" type="text" placeholder="Patient name" required
+                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                <select id="patient-edit-category" required
+                        class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                    <option value="" disabled selected>Pilih kategori</option>
+                </select>
+                <input id="patient-edit-age" type="number" min="0" placeholder="Age" required
+                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                <input id="patient-edit-city" type="text" placeholder="City" required
+                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200">
+                <input id="patient-edit-info" type="text" placeholder="Info (optional)"
+                       class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-200 sm:col-span-2">
+                <div class="mt-2 flex items-center justify-end gap-2 sm:col-span-2">
+                    <button type="button" id="patient-edit-cancel"
+                            class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:border-slate-300 hover:text-slate-800">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                            class="rounded-lg bg-emerald-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-emerald-600">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/vendor/d3/d3.min.js"></script>
+    <script src="/public/js/chart.js"></script>
+    <script>
+        let cachedCategories = [];
+
+        async function requestJson(url, options) {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                const text = await response.text();
+                throw new Error(text || "Request failed");
+            }
+            if (response.status === 204) {
+                return null;
+            }
+            return response.json();
+        }
+
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.classList.add("overflow-hidden");
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        function renderList(container, items, apiBase) {
+            container.innerHTML = "";
+            if (!items.length) {
+                const empty = document.createElement("li");
+                empty.className = "py-6 text-center text-sm text-slate-500";
+                empty.textContent = "Belum ada data.";
+                container.appendChild(empty);
+                return;
+            }
+            items.forEach((item) => {
+                const li = document.createElement("li");
+                li.className = "flex flex-wrap items-start justify-between gap-3 py-3";
+                const content = document.createElement("div");
+                const label = document.createElement("div");
+                label.className = "font-medium text-slate-800";
+                label.textContent = `${item.id}. ${item.name}`;
+
+                if (item.category_id !== undefined) {
+                    const meta = document.createElement("div");
+                    meta.className = "text-xs text-slate-500";
+                    meta.textContent = `Category ${item.category_id} • Age ${item.age} • ${item.city}${item.info ? " • " + item.info : ""}`;
+                    content.appendChild(label);
+                    content.appendChild(meta);
+                } else {
+                    content.appendChild(label);
+                }
+
+                const actions = document.createElement("div");
+                actions.className = "flex items-center gap-2";
+
+                const editBtn = document.createElement("button");
+                editBtn.textContent = "Edit";
+                editBtn.className = "rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:text-slate-800";
+                editBtn.onclick = async () => {
+                    if (item.category_id === undefined) {
+                        document.getElementById("category-edit-id").value = item.id;
+                        document.getElementById("category-edit-name").value = item.name;
+                        openModal("category-modal");
+                        return;
+                    }
+
+                    document.getElementById("patient-edit-id").value = item.id;
+                    document.getElementById("patient-edit-name").value = item.name;
+                    document.getElementById("patient-edit-age").value = item.age ?? "";
+                    document.getElementById("patient-edit-city").value = item.city ?? "";
+                    document.getElementById("patient-edit-info").value = item.info ?? "";
+                    renderCategoryOptions(
+                        document.getElementById("patient-edit-category"),
+                        cachedCategories,
+                        item.category_id
+                    );
+                    openModal("patient-modal");
+                };
+
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.className = "rounded-lg border border-rose-200 px-3 py-1 text-xs font-semibold text-rose-600 transition hover:border-rose-300 hover:text-rose-700";
+                deleteBtn.onclick = async () => {
+                    await requestJson(`${apiBase}/${item.id}`, { method: "DELETE" });
+                    await loadData();
+                };
+
+                li.appendChild(content);
+                actions.appendChild(editBtn);
+                actions.appendChild(deleteBtn);
+                li.appendChild(actions);
+                container.appendChild(li);
+            });
+        }
+
+        function renderCategoryOptions(select, categories, selectedValue) {
+            select.innerHTML = "";
+            const placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = "Pilih kategori";
+            placeholder.disabled = true;
+            placeholder.selected = selectedValue === undefined || selectedValue === null || selectedValue === "";
+            select.appendChild(placeholder);
+            if (!categories.length) {
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = "Tidak ada kategori";
+                option.disabled = true;
+                select.appendChild(option);
+                return;
+            }
+            categories.forEach((category) => {
+                const option = document.createElement("option");
+                option.value = category.id;
+                option.textContent = `${category.id}. ${category.name}`;
+                if (String(category.id) === String(selectedValue)) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+        }
+
+        async function loadData() {
+            const [categories, patients] = await Promise.all([
+                requestJson("/api/categories"),
+                requestJson("/api/patients")
+            ]);
+            cachedCategories = categories;
+            renderCategoryOptions(document.getElementById("patient-category"), categories);
+            renderList(document.getElementById("category-list"), categories, "/api/categories");
+            renderList(document.getElementById("patient-list"), patients, "/api/patients");
+            document.dispatchEvent(
+                new CustomEvent("charts:data", { detail: { categories, patients } })
+            );
+        }
+
+        ["category-modal", "patient-modal"].forEach((id) => {
+            const modal = document.getElementById(id);
+            modal.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    closeModal(id);
+                }
+            });
+        });
+
+        document.getElementById("category-edit-cancel").addEventListener("click", () => closeModal("category-modal"));
+        document.getElementById("category-edit-close").addEventListener("click", () => closeModal("category-modal"));
+        document.getElementById("patient-edit-cancel").addEventListener("click", () => closeModal("patient-modal"));
+        document.getElementById("patient-edit-close").addEventListener("click", () => closeModal("patient-modal"));
+
+        document.getElementById("category-edit-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const id = document.getElementById("category-edit-id").value;
+            const name = document.getElementById("category-edit-name").value.trim();
+            if (!name) {
+                alert("Category name is required.");
+                return;
+            }
+            await requestJson(`/api/categories/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name })
+            });
+            closeModal("category-modal");
+            await loadData();
+        });
+
+        document.getElementById("patient-edit-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const id = document.getElementById("patient-edit-id").value;
+            const name = document.getElementById("patient-edit-name").value.trim();
+            const categoryValue = document.getElementById("patient-edit-category").value;
+            const ageValue = document.getElementById("patient-edit-age").value;
+            const city = document.getElementById("patient-edit-city").value.trim();
+            const info = document.getElementById("patient-edit-info").value.trim();
+            const categoryId = Number(categoryValue);
+            const age = Number(ageValue);
+
+            if (!name || !city) {
+                alert("Name and city are required.");
+                return;
+            }
+            if (!Number.isInteger(categoryId)) {
+                alert("Category is required.");
+                return;
+            }
+            if (!Number.isInteger(age)) {
+                alert("Age must be a number.");
+                return;
+            }
+
+            await requestJson(`/api/patients/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name,
+                    category_id: categoryId,
+                    age,
+                    city,
+                    info
+                })
+            });
+            closeModal("patient-modal");
+            await loadData();
+        });
+
+        document.getElementById("category-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const input = document.getElementById("category-name");
+            await requestJson("/api/categories", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: input.value })
+            });
+            input.value = "";
+            await loadData();
+        });
+
+        document.getElementById("patient-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const nameInput = document.getElementById("patient-name");
+            const categoryInput = document.getElementById("patient-category");
+            const ageInput = document.getElementById("patient-age");
+            const cityInput = document.getElementById("patient-city");
+            const infoInput = document.getElementById("patient-info");
+            const categoryId = Number(categoryInput.value);
+            const age = Number(ageInput.value);
+
+            if (!nameInput.value.trim() || !cityInput.value.trim()) {
+                alert("Name and city are required.");
+                return;
+            }
+            if (!Number.isInteger(categoryId)) {
+                alert("Category is required.");
+                return;
+            }
+            if (!Number.isInteger(age)) {
+                alert("Age must be a number.");
+                return;
+            }
+            await requestJson("/api/patients", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: nameInput.value.trim(),
+                    category_id: categoryId,
+                    age,
+                    city: cityInput.value.trim(),
+                    info: infoInput.value.trim()
+                })
+            });
+            nameInput.value = "";
+            categoryInput.value = "";
+            ageInput.value = "";
+            cityInput.value = "";
+            infoInput.value = "";
+            await loadData();
+        });
+
+        loadData().catch((error) => {
+            console.error(error);
+            alert("Gagal memuat data, cek console.");
+        });
+    </script>
+</body>
+</html>
